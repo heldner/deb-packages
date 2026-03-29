@@ -23,7 +23,7 @@ jobs:
       - name: Build with docker
         uses: addnab/docker-run-action@v3
         with:
-          image: debian:bookworm-slim
+          image: debian:trixie-slim
           options: -v ${{ github.workspace }}:/github/workspace -w /github/workspace
           run: |
             apt-get update
