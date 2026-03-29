@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+# Reload systemd to apply unit file
+if [ -d /run/systemd/system ]; then
+    systemctl daemon-reload >/dev/null 2>&1 || true
+    
+    # Enable and start the service
+    if [ "$1" = "configure" ]; then
+        systemctl enable torrserver.service >/dev/null 2>&1 || true
+        systemctl start torrserver.service >/dev/null 2>&1 || true
+    fi
+fi
+
+exit 0

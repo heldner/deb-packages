@@ -1,0 +1,18 @@
+torrserver (137-3) stable; urgency=medium
+
+  * Fix binary download: strip Debian revision from upstream version
+  * Fix build: use changelog version for .deb filename
+
+ -- Stanislav Korolev <stan.korolev@mail.ru>  Mon, 23 Mar 2026 22:19:37 +0300
+
+torrserver (137-2) stable; urgency=medium
+
+  * Add systemd unit
+
+ -- Stanislav Korolev <stan.korolev@mail.ru>  Tue, 06 Jan 2026 11:44:37 +0300
+
+torrserver (137-1) unstable; urgency=medium
+
+  * Initial release
+
+ -- Stanislav Korolev <stan.korolev@mail.ru>  Tue, 06 Jan 2026 11:09:31 +0300

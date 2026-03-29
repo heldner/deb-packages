@@ -7,6 +7,7 @@ Debian packages built from upstream binaries. Each package lives in its own dire
 | Package | Description |
 |---------|-------------|
 | [sthp](packages/sthp) | SOCKS5 to HTTP proxy ([upstream](https://github.com/KaranGauswami/socks-to-http-proxy)) |
+| [torrserver](packages/torrserver) | Torrent streaming server ([upstream](https://github.com/YouROK/TorrServer)) |
 
 ## Repository structure
 

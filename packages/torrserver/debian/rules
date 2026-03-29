@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_BUILD_OPTIONS = noautodbgsym nocheck
+export DEB_SOURCE_CHECK = nocheck
+
+RELEASE ?= 137
+UPSTREAM_VERSION = $(firstword $(subst -, ,$(RELEASE)))
+
+%:
+	dh $@
+
+override_dh_prep:
+	@true
+
+override_dh_auto_build:
+	curl -fL -o torrserver-binary https://github.com/YouROK/TorrServer/releases/download/MatriX.$(UPSTREAM_VERSION)/TorrServer-linux-amd64
+	chmod +x torrserver-binary
+
+override_dh_auto_install:
+	mkdir -p $(CURDIR)/debian/torrserver/usr/bin
+	mkdir -p $(CURDIR)/debian/torrserver/etc/systemd/system
+	install -m 755 torrserver-binary $(CURDIR)/debian/torrserver/usr/bin/torrserver
+	install -m 644 torrserver.service $(CURDIR)/debian/torrserver/etc/systemd/system/torrserver.service

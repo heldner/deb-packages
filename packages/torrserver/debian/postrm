@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+# Remove user, group and data directory after package removal
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    # Remove data directory (only on purge to avoid data loss)
+    if [ "$1" = "purge" ]; then
+        if [ -d /var/lib/torrserver ]; then
+            rm -rf /var/lib/torrserver
+        fi
+    fi
+    
+    # Remove user and group (only if no other packages use them)
+    if getent passwd torrserver >/dev/null 2>&1; then
+        # Check if user's home directory still exists
+        if [ ! -d /var/lib/torrserver ]; then
+            userdel torrserver >/dev/null 2>&1 || true
+        fi
+    fi
+    
+    if getent group torrserver >/dev/null 2>&1; then
+        # Only remove group if no users are left in it
+        if [ -z "$(getent group torrserver | cut -d: -f4)" ]; then
+            groupdel torrserver >/dev/null 2>&1 || true
+        fi
+    fi
+fi
+
+exit 0

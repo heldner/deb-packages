@@ -1,0 +1,12 @@
+Source: torrserver
+Section: net
+Priority: optional
+Maintainer: Stanislav Korolev <stan.korolev@mail.ru>
+Build-Depends: debhelper-compat (= 13), build-essential, curl
+Standards-Version: 4.6.0
+
+Package: torrserver
+Architecture: amd64
+Description: TorrServer - Torrent streaming server
+ TorrServer is a torrent streaming server that allows you to stream
+ torrent files without downloading them completely.

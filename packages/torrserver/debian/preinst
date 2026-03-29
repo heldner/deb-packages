@@ -1,0 +1,32 @@
+#!/bin/bash
+set -e
+
+# Create torrserver user and group
+if ! getent group torrserver >/dev/null 2>&1; then
+    addgroup --system --quiet torrserver
+fi
+
+if ! getent passwd torrserver >/dev/null 2>&1; then
+    adduser --system --quiet \
+        --home /var/lib/torrserver \
+        --shell /usr/sbin/nologin \
+        --ingroup torrserver \
+        --disabled-password \
+        --gecos "TorrServer service user" \
+        torrserver
+fi
+
+# Create data directory
+if [ ! -d /var/lib/torrserver ]; then
+    mkdir -p /var/lib/torrserver
+    chown torrserver:torrserver /var/lib/torrserver
+    chmod 755 /var/lib/torrserver
+fi
+
+# Stop and disable old service if exists
+if [ -f /etc/systemd/system/torrserver.service ]; then
+    systemctl stop torrserver.service >/dev/null 2>&1 || true
+    systemctl disable torrserver.service >/dev/null 2>&1 || true
+fi
+
+exit 0
