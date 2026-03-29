@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_BUILD_OPTIONS = noautodbgsym nocheck
+export DEB_SOURCE_CHECK = nocheck
+
+RELEASE ?= 0.5.0
+UPSTREAM_VERSION = $(firstword $(subst -, ,$(RELEASE)))
+
+%:
+	dh $@
+
+override_dh_prep:
+	@true
+
+override_dh_auto_build:
+	curl -fL -o sthp-binary https://github.com/KaranGauswami/socks-to-http-proxy/releases/download/v$(UPSTREAM_VERSION)/sthp-linux
+	chmod +x sthp-binary
+
+override_dh_auto_install:
+	mkdir -p $(CURDIR)/debian/sthp/usr/bin
+	mkdir -p $(CURDIR)/debian/sthp/etc/systemd/system
+	mkdir -p $(CURDIR)/debian/sthp/etc/default
+	install -m 755 sthp-binary $(CURDIR)/debian/sthp/usr/bin/sthp
+	install -m 644 sthp.service $(CURDIR)/debian/sthp/etc/systemd/system/sthp.service
+	install -m 644 sthp.default $(CURDIR)/debian/sthp/etc/default/sthp

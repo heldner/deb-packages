@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+if [ -d /run/systemd/system ]; then
+    systemctl daemon-reload >/dev/null 2>&1 || true
+
+    if [ "$1" = "configure" ]; then
+        systemctl enable sthp.service >/dev/null 2>&1 || true
+        systemctl start sthp.service >/dev/null 2>&1 || true
+    fi
+fi
+
+exit 0

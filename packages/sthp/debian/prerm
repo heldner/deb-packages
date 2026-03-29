@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+
+if [ -d /run/systemd/system ]; then
+    if systemctl is-active --quiet sthp.service 2>/dev/null; then
+        systemctl stop sthp.service >/dev/null 2>&1 || true
+    fi
+    if systemctl is-enabled --quiet sthp.service 2>/dev/null; then
+        systemctl disable sthp.service >/dev/null 2>&1 || true
+    fi
+    systemctl daemon-reload >/dev/null 2>&1 || true
+fi
+
+exit 0

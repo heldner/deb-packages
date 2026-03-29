@@ -1,0 +1,11 @@
+Source: sthp
+Section: net
+Priority: optional
+Maintainer: Stanislav Korolev <stan.korolev@mail.ru>
+Build-Depends: debhelper-compat (= 13), build-essential, curl
+Standards-Version: 4.6.0
+
+Package: sthp
+Architecture: amd64
+Description: STHP - SOCKS to HTTP proxy
+ A lightweight proxy that converts SOCKS5 proxy to HTTP proxy.
